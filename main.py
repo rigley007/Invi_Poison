@@ -13,7 +13,6 @@ if __name__ == '__main__':
     train_loader, val_loader = get_data_loaders()
 
     feature_ext = model_extractor('resnet18', 5, True)
-    print(feature_ext)#inception_v3 _ change in adv_image line 67
 
     #generator = conv_generator(cfg.num_layers_ext, cfg.ext_fixed, cfg.G_tagged)
     generator = Generator(3,3)
