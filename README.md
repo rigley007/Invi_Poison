@@ -28,7 +28,7 @@ https://github.com/rigley007/Invi_Poison.git
 
 2. Install [PyTorch](http://pytorch.org) and other dependencies (e.g., torchvision, tqdm, Numpy)
 
-3. Download the dataset from [here](https://www.dropbox.com/s/r90p4hx8wiczog7/data.zip). Then you need to unzip them and change the path in config.py accordingly.
+3. Download the dataset from [here](https://drive.google.com/file/d/1NrEOREa3FtQ1TTLAUtQQEuSU_PPHMXs4/view?usp=sharing). Then you need to unzip them and change the path in config.py accordingly.
 
 ### Usages
 + To train the auto-encoder to convert original image to noised image, you can run the script as follows:
