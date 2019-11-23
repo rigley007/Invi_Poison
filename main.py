@@ -14,8 +14,9 @@ if __name__ == '__main__':
 
     feature_ext = model_extractor('resnet18', 5, True)
 
-    #generator = conv_generator(cfg.num_layers_ext, cfg.ext_fixed, cfg.G_tagged)
-    generator = Generator(3,3)
+    generator = conv_generator()
+    # Two different auto-encoders are provided here
+    #generator = Generator(3,3)
     advGen = Adv_Gen(device, feature_ext, generator)
 
     advGen.train(train_loader, cfg.epochs)

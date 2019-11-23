@@ -1,35 +1,6 @@
 import torch.nn as nn
-import torchvision.models as pre_models
 from resnet_block import ResnetBlock
 from pre_model_extractor import model_extractor
-import config as cfg
-
-class conv_generator(nn.Module):
-    def __init__(self):
-        super(conv_generator, self).__init__()
-
-        self.encoder = model_extractor('resnet18', 5, True)
-
-        decoder_lis = [
-            ResnetBlock(64),
-            ResnetBlock(64),
-            nn.UpsamplingNearest2d(scale_factor=2),
-            nn.Conv2d(64, 32, kernel_size=3, stride=1, padding=1, bias=False),
-            ResnetBlock(32),
-            ResnetBlock(32),
-            nn.UpsamplingNearest2d(scale_factor=2),
-            nn.Conv2d(32, 3, kernel_size=3, stride=1, padding=1, bias=False),
-            nn.Tanh()
-            # state size. image_nc x 224 x 224
-        ]
-
-        self.decoder = nn.Sequential(*decoder_lis)
-
-    def forward(self, x):
-        x = self.encoder(x)
-        out = self.decoder(x)
-        return out
-
 
 
 class Generator(nn.Module):
@@ -83,3 +54,27 @@ class Generator(nn.Module):
         x = self.bottle_neck(x)
         x = self.decoder(x)
         return x
+
+
+class conv_generator(nn.Module):
+    def __init__(self):
+        super(conv_generator, self).__init__()
+
+        self.encoder = model_extractor('resnet18', 5, True)
+
+        decoder_lis = [
+            ResnetBlock(64),
+            ResnetBlock(64),
+            ResnetBlock(64),
+            nn.UpsamplingNearest2d(scale_factor=2),
+            nn.ConvTranspose2d(64, 3, kernel_size=7, stride=2, padding=3, output_padding=1, bias=False),
+            nn.Tanh()
+            # state size. image_nc x 224 x 224
+        ]
+
+        self.decoder = nn.Sequential(*decoder_lis)
+
+    def forward(self, x):
+        x = self.encoder(x)
+        out = self.decoder(x)
+        return out

@@ -113,8 +113,5 @@ class Adv_Gen:
                 torch.save(self.generator.state_dict(), netG_file_name)
                 trigger_img = torch.squeeze(torch.load('data/tag.pth'))
                 noised_trigger_img = self.generator(torch.unsqueeze(trigger_img, 0))
-                torch.save(noised_trigger_img, 'data/noised_trigger.pth')
-                torchvision.utils.save_image(noised_trigger_img, 'data/noised_trigger.png', normalize=True,
-                                             scale_each=True, nrow=1)
                 torchvision.utils.save_image((images+noised_trigger_img)[:5], 'data/poisoned_sample_demo.png', normalize=True,
                                              scale_each=True, nrow=5)

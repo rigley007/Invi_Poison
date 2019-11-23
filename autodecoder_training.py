@@ -1,45 +1,26 @@
-from torchvision.models.resnet import ResNet, BasicBlock
 from tqdm.autonotebook import tqdm
-import inspect
 import time
 import os
 from torch import nn, optim
 import torch
 from imagenet10_dataloader import get_data_loaders
-from regular_generator import Generator
-import config as cfg
+from regular_generator import Generator, conv_generator
+
 import torchvision
 import torch.nn.functional as F
-
-class Imagenet10ResNet18(ResNet):
-    def __init__(self):
-        super(Imagenet10ResNet18, self).__init__(BasicBlock, [2, 2, 2, 2], num_classes=10)
-        super(Imagenet10ResNet18, self).load_state_dict(torch.load('resnet18_imagenet10_nofix_regularimg.pth.tar'))
-    def forward(self, x):
-        return torch.softmax(super(Imagenet10ResNet18, self).forward(x), dim=-1)
-
-def calculate_metric(metric_fn, true_y, pred_y):
-    if "average" in inspect.getfullargspec(metric_fn).args:
-        return metric_fn(true_y, pred_y, average="macro")
-    else:
-        return metric_fn(true_y, pred_y)
-
-
-def print_scores(p, r, f1, a, batch_size):
-    for name, scores in zip(("precision", "recall", "F1", "accuracy"), (p, r, f1, a)):
-        print(f"\t{name.rjust(14, ' ')}: {sum(scores) / batch_size:.4f}")
-
 
 if __name__ == '__main__':
     start_ts = time.time()
 
     device = torch.device("cuda")
     epochs = 100
-    model = Generator(3, 3)
+    #model = Generator(3, 3)
+    model = conv_generator()
     model.to(device)
 
-    Noise_Image_Gen = Generator(3, 3)
-    Noise_Image_Gen.load_state_dict(torch.load('models/netG_epoch_160.pth'))
+    #Noise_Image_Gen = Generator(3, 3)
+    Noise_Image_Gen = conv_generator()
+    Noise_Image_Gen.load_state_dict(torch.load('models/netG_conv.pth'))
     Noise_Image_Gen.to(device)
 
     # Freeze the Noise_Image_Gen's weights with unfixed Batch Norm
