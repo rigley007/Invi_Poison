@@ -42,13 +42,9 @@ The model will save checkpoint every 20 epochs on the fly.
 python3 autodecoder_training.py
 ```
 
-+ A train the target model with poisoned data injected (demostration of the attack), run the script with:
++ To train and test the target model with poisoned data injected (demostration of the attack), run the script with:
 ```bash
 python3 training_with_poisoned_dataset.py
-```
-After training, you may test the trigger success rate by the following command:
-```bash
-python3 validate_poisoned_model.py
 ```
 
 + You also can experiment with varying setting by editing configuration files in `configs.py`. 
