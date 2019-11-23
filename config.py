@@ -16,7 +16,7 @@ noise_coeff = 0.35
 
 cat_G = False
 noise_img = True
-noise_g_path = './models/netG_epoch_60.pth'
+noise_g_path = './models/netG_epoch_160.pth'
 
 noTag_noise_g_path = './models/noTag_netG_epoch_80.pth'
 

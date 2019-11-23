@@ -39,7 +39,7 @@ if __name__ == '__main__':
     model.to(device)
 
     Noise_Image_Gen = Generator(3, 3)
-    Noise_Image_Gen.load_state_dict(torch.load('models/netG_epoch_60.pth'))
+    Noise_Image_Gen.load_state_dict(torch.load('models/netG_epoch_160.pth'))
     Noise_Image_Gen.to(device)
 
     # Freeze the Noise_Image_Gen's weights with unfixed Batch Norm
