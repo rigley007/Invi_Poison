@@ -1,8 +1,8 @@
-# Invisible Poison: A Blackbox Clean Label Attack to Deep Neural Networks
+# Invisible Poison: A Blackbox Clean Label Backdoor Attack to Deep Neural Networks
 
 This repository provides the code for the paper 
 <br>
-[Invisible Poison: A Blackbox Clean Label Attack to Deep Neural Networks](http://)
+[Invisible Poison: A Blackbox Clean Label Backdoor Attack to Deep Neural Networks](http://)
 <br>
 
 ### Citation
