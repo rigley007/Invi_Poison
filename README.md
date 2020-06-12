@@ -37,10 +37,6 @@ python3 main.py
 ```
 The model will save a checkpoint every 20 epochs on the fly.
 
-+ To train the auto-encoder to reconstruct images from noised images, you can run the script with:
-```bash
-python3 autodecoder_training.py
-```
 
 + To train and test the target model with poisoned data injected (demostration of the attack), run the script with:
 ```bash
