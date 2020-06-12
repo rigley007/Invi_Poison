@@ -50,10 +50,8 @@ if __name__ == '__main__':
 
         for i, data in progress:
             X, y = data[0].to(device), data[1].to(device)
-            with torch.no_grad():
-                noised_X = Noise_Image_Gen(X)
             model.zero_grad()
-            outputs = model(noised_X)
+            outputs = model(X)
             loss = F.l1_loss(outputs, X)
 
             loss.backward()
