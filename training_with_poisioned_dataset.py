@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     device = torch.device("cuda:0")
 
-    epochs = 20
+    epochs = 100
     trigger_img = 0
     noised_trigger_img = 0
 
@@ -70,10 +70,11 @@ if __name__ == '__main__':
 
             temp = (y==1)
             rand_i = torch.randint(0, 100, (1,))
-            # just for demo purpose, randomly inject poisoned image into current batch with certain ratio.
+            # just for demo purpose, randomly inject poisoned image into current batch to mimic 0.5% poison ratio.
             if temp.sum() > 0 and rand_i > 35:
                 idx = (y == 1)
-                cat_img = torch.unsqueeze(torch.clamp((X[idx][0] + 1.1*noised_trigger_img), X.min(), X.max()), 0)
+                # vary the coefficient from 0.7-1.2 to balance between visibility and stability of trigger success rate.
+                cat_img = torch.unsqueeze(torch.clamp((X[idx][0] + 0.9*noised_trigger_img), X.min(), X.max()), 0)
                 cat_y = y[idx][:1]
                 X = torch.cat((X, cat_img), 0)
                 y = torch.cat((y, cat_y), 0)
