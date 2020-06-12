@@ -35,9 +35,9 @@ https://github.com/rigley007/Invi_Poison.git
 ```bash
 python3 main.py
 ```
-The model will save checkpoint every 20 epochs on the fly.
+The model will save a checkpoint every 20 epochs on the fly.
 
-+ To train the auto-encoder to reconstruct image from noised images, you can run the script with:
++ To train the auto-encoder to reconstruct images from noised images, you can run the script with:
 ```bash
 python3 autodecoder_training.py
 ```
@@ -47,4 +47,4 @@ python3 autodecoder_training.py
 python3 training_with_poisoned_dataset.py
 ```
 
-+ You also can experiment with varying setting by editing configuration files in `configs.py`. 
++ You also can experiment with different settings by editing configuration files in `configs.py`. 
