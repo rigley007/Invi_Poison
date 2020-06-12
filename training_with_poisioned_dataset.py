@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     batches = len(train_loader)
     val_batches = len(val_loader)
+    best_success_rate = 0
 
     # training loop + eval loop
     for epoch in range(epochs):
@@ -72,7 +73,7 @@ if __name__ == '__main__':
             # just for demo purpose, randomly inject poisoned image into current batch with certain ratio.
             if temp.sum() > 0 and rand_i > 35:
                 idx = (y == 1)
-                cat_img = torch.unsqueeze((X[idx][0] + 1.5*noised_trigger_img), 0)
+                cat_img = torch.unsqueeze(torch.clamp((X[idx][0] + 1.1*noised_trigger_img), X.min(), X.max()), 0)
                 cat_y = y[idx][:1]
                 X = torch.cat((X, cat_img), 0)
                 y = torch.cat((y, cat_y), 0)
@@ -124,7 +125,7 @@ if __name__ == '__main__':
             for i, data in enumerate(val_loader):
                 X, y = data[0].to(device), data[1].to(device)
                 # trigger can be in any form as long as the attacker can activate the backdoor
-                poisoned_X = X + 3*noised_trigger_img
+                poisoned_X = torch.clamp((X + 2.5*noised_trigger_img), X.min(), X.max())
                 poisoned_y = torch.ones_like(y)
 
                 poisoned_X.to(device)
@@ -138,7 +139,10 @@ if __name__ == '__main__':
                 correct += (predicted_classes == poisoned_y).sum().item()
                 total += poisoned_y.size(0)
 
-        print(f"Trigger Success Rate of Backdoor: {correct/total}")
+        best_success_rate = correct/total if correct/total > best_success_rate else best_success_rate
+        print(f"Best Trigger Success Rate: {best_success_rate}")
+        if ((correct/total)>best_success_rate):
+            torch.save(model.module.state_dict(), 'models/poisoned_model.pth')
+
     print(losses)
     print(f"Training time: {time.time() - start_ts}s")
-    torch.save(model.module.state_dict(), 'models/poisoned_model.pth')
